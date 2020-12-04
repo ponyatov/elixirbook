@@ -1,0 +1,7 @@
+digraph {
+    rankdir=LR
+    Phoenix -> Elixir [label=".ex"]
+    Elixir -> Erlang 
+    library -> Erlang [label=".erl"]
+    Erlang -> BEAM [label=".beam"]
+}

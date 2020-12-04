@@ -1,0 +1,3 @@
+git make wget
+texlive-latex-extra gtexlive-extra-utils
+graphviz ghostscript
