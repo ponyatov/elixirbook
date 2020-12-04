@@ -1,5 +1,5 @@
 #  `elixirbook`
-## Язык \ex\ (\erl) для веб-разработчика
+## Язык Elixir (Erlang) для веб-разработчика
 
 (c) Dmitry Ponyatov <<dponyatov@gmail.com>> 2020 MIT
 
