@@ -2,6 +2,7 @@
 MODULE    = $(notdir $(CURDIR))
 OS        = $(shell uname -s)
 MACHINE   = $(shell uname -m)
+TODAY     = $(shell date +%d%m%y)
 # / <section:var>
 # \ <section:dir>
 CWD       = $(CURDIR)
@@ -24,13 +25,16 @@ TEX += tex/bib.tex
 # \ <section:all>
 .PHONY: all
 all: 	
-	$(MAKE) pdf
+	$(MAKE) $(DOC)/elixirbook.pdf
 tmp/%.pdf: tex/%.dot
 	dot -Tpdf -o $@.crop $<
 	pdfcrop $@.crop $@
 # / <section:all>
 .PHONY: pdf
 pdf: $(DOC)/elixirbook.pdf
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen \
+		-dNOPAUSE -dQUIET -dBATCH \
+		-sOutputFile=$(MODULE)_$(TODAY).pdf $<
 $(DOC)/elixirbook.pdf: $(TMP)/elixirbook.pdf
 	cp $< $@
 $(TMP)/elixirbook.pdf: $(TEX) $(FIG)
@@ -49,7 +53,6 @@ $(OS)_install $(OS)_update:
 # / <section:install>
 # \ <section:merge>
 MERGE  = Makefile README.md apt.txt .gitignore .vscode $(S)
-# / <section:merge>
 .PHONY: main
 main:
 	git push -v
@@ -61,3 +64,8 @@ shadow:
 	git pull -v
 	git checkout $@
 	git pull -v
+.PHONY: release
+release:
+	git tag $(TODAY)
+	git push -v --tags
+# / <section:merge>
